@@ -1,6 +1,8 @@
 <?php
 
+use GuzzleHttp\Middleware;
 use Illuminate\Support\Facades\Route;
+use App\Http\Middleware\Autenticado;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,5 +16,17 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('productos');
+})->middleware(Autenticado::class);
+
+Route::get('/privada', function(){
+    return view('privada');
+});
+
+Route::get('/login', function(){
+    return view('login');
+});
+
+Route::get('/register', function(){
+    return view('register');
 });

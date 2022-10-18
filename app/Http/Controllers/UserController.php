@@ -24,10 +24,8 @@ class UserController extends Controller
 
     public function login(Request $request){
         $credentials = $request->only('name', 'password');
-        var_dump($credentials);
         try {
             if(Auth::attempt($credentials)){
-                echo Auth::attempt($credentials);
                 return redirect('/');}
         } catch (\Throwable $th) {
             return redirect() -> to('login') -> withErrors(trans('Credenciales incorrectas, intente nuevamente'));

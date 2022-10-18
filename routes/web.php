@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\UserController;
 use GuzzleHttp\Middleware;
 use Illuminate\Support\Facades\Route;
@@ -16,13 +17,7 @@ use App\Http\Middleware\Autenticado;
 |
 */
 
-Route::get('/', function () {
-    return view('productos');
-})->middleware(Autenticado::class);
-
-Route::get('/privada', function(){
-    return view('privada');
-});
+Route::get('/', [ProductoController::class, 'listar'])->middleware(Autenticado::class);
 
 Route::get('/login', function(){
     return view('login');
@@ -35,4 +30,14 @@ Route::get('/register', function(){
 Route::post('/register',[UserController::class, 'register']);
 Route::post('/login', [UserController::class, 'login']);
 
-Route::get('/logout', [UserController::class, 'logout']);
+Route::get('/logout', [UserController::class, 'logout'])->middleware(Autenticado::class);
+
+Route::get('/agregarProducto', function(){
+    return view('agregarProducto');
+})->middleware(Autenticado::class);
+
+Route::post('/agregarProducto', [ProductoController::class, 'agregar'])->middleware(Autenticado::class);
+Route::get('/modificarProducto', [ProductoController::class, 'listarUno']);
+Route::get('/eliminarProducto', [ProductoController::class, 'eliminar']);
+
+Route::post('/modificarProducto', [ProductoController::class, 'modificar']);

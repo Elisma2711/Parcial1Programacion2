@@ -4,82 +4,43 @@ namespace App\Http\Controllers;
 
 use App\Models\producto;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redis;
 
 class ProductoController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
+    public function listar(){
+        $Productos = producto::all();
+        return view('productos',["Productos" => $Productos]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function agregar(Request $request)
     {
-        //
+        $p = new producto();
+        $p -> nombre = $request -> post('nombre');
+        $p -> marca = $request -> post('marca');
+        $p -> descripcion = $request -> post('descripcion');
+        $p -> stock = $request -> post('stock');
+
+        try {
+            if($p -> save())
+                return redirect('/');
+        } catch (\Throwable $th) {
+            return redirect() -> to('agregarProducto') -> withErrors(trans('No se pudo agregar el producto'));
+        }
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
+    public function listarUno(Request $request){
+        return view('modificarProducto',["Producto" => producto::whereId($request -> get('idProductoModificar'))->first()]);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\producto  $producto
-     * @return \Illuminate\Http\Response
-     */
-    public function show(producto $producto)
+    public function modificar(Request $request)
     {
-        //
+        
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\producto  $producto
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(producto $producto)
+    public function eliminar(Request $request)
     {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\producto  $producto
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, producto $producto)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\producto  $producto
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(producto $producto)
-    {
-        //
+        producto::whereId($request -> get('idProductoEliminar'))->first()->delete();
+        return redirect('/');
     }
 }

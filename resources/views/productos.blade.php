@@ -7,6 +7,12 @@
     <title>Productos</title>
 </head>
 <body>
-    Productos
+    <header>
+        <a href="/logout"><button>Logout</button></a>
+    </header>
+    
+    <section>
+        <h1>Productos</h1>
+    </section>
 </body>
 </html>

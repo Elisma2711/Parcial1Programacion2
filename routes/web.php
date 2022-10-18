@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\UserController;
 use GuzzleHttp\Middleware;
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\Autenticado;
@@ -30,3 +31,8 @@ Route::get('/login', function(){
 Route::get('/register', function(){
     return view('register');
 });
+
+Route::post('/register',[UserController::class, 'register']);
+Route::post('/login', [UserController::class, 'login']);
+
+Route::get('/logout', [UserController::class, 'logout']);

@@ -9,12 +9,16 @@
 <body>
     <h1>Login</h1>
     <br />
-    <form action="/login" method="post">
+    <form action="/login" method="post">@csrf
         Nickname: <input type="text" name="name"> <br />
-        Password: <input type="text" name="password"> <br />
+        Password: <input type="password" name="password"> <br />
         <br />
         <input type="submit" value="Iniciar Sesion">
     </form>
     <a href="/register">Register</a>
+    <br />
+    @if($errors->any())
+        <h4 style="color: red;"><b>{{$errors->first()}}</b></h4>
+    @endif
 </body>
 </html>

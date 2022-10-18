@@ -37,7 +37,7 @@ Route::get('/agregarProducto', function(){
 })->middleware(Autenticado::class);
 
 Route::post('/agregarProducto', [ProductoController::class, 'agregar'])->middleware(Autenticado::class);
-Route::get('/modificarProducto', [ProductoController::class, 'listarUno']);
-Route::get('/eliminarProducto', [ProductoController::class, 'eliminar']);
+Route::get('/modificarProducto', [ProductoController::class, 'listarUno'])->middleware(Autenticado::class);
+Route::get('/eliminarProducto', [ProductoController::class, 'eliminar'])->middleware(Autenticado::class);
 
-Route::post('/modificarProducto', [ProductoController::class, 'modificar']);
+Route::post('/modificarProducto', [ProductoController::class, 'modificar'])->middleware(Autenticado::class);
